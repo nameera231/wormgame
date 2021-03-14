@@ -25,11 +25,11 @@ typedef struct task_info {
   // is exiting.
   ucontext_t exit_context;
   
-  // TODO: Add fields here so you can:
-  //   a. Keep track of this task's state.
-  //   b. If the task is sleeping, when should it wake up?
-  //   c. If the task is waiting for another task, which task is it waiting for?
-  //   d. Was the task blocked waiting for user input? Once you successfully
+  // 
+  //    Keep track of this task's state.
+  //    If the task is sleeping, when should it wake up?
+  //    If the task is waiting for another task, which task is it waiting for?
+  //    Was the task blocked waiting for user input? Once you successfully
   //      read input, you will need to save it here so it can be returned.
   //block = 0 -- unblocked
   //block = 1 -- blocked for sleep
@@ -136,7 +136,7 @@ void scheduler_init() {
  * because of how the contexts are set up in the task_create function.
  */
 void task_exit() {
-  // TODO: Handle the end of a task's execution here
+  // Handle the end of a task's execution here
   //exit the task
   tasks[current_task].exit = true;
   //call switcher to find next task
@@ -198,11 +198,11 @@ void task_create(task_t* handle, task_fn_t fn) {
  * \param handle  This is the handle produced by task_create
  */
 void task_wait(task_t handle) {
-  // TODO: Block this task until the specified task has exited.
+  // Block this task until the specified task has exited.
   //puts("task wait\n");
   if(tasks[handle].exit == true) {
     tasks[current_task].blocked = 0;
-    //puts("wait exit");
+   
     return;
   } else {
       tasks[current_task].blocked = 2;
@@ -220,8 +220,8 @@ void task_wait(task_t handle) {
  * \param ms  The number of milliseconds the task should sleep.
  */
 void task_sleep(size_t ms) {
-  // TODO: Block this task until the requested time has elapsed.
-  // Hint: Record the time the task should wake up instead of the time left for it to sleep. The bookkeeping is easier this way.
+  // Block this task until the requested time has elapsed.
+  // Record the time the task should wake up instead of the time left for it to sleep. The bookkeeping is easier this way.
   //wakeup time = ms; --add current to wait time and just wakeup when it is equal
   tasks[current_task].wakeup_time = time_ms() + ms;
   tasks[current_task].blocked = 1;
@@ -237,7 +237,7 @@ void task_sleep(size_t ms) {
  * \returns The read character code
  */
 int task_readchar() {
-  // TODO: Block this task until there is input available.
+  // Block this task until there is input available.
   // To check for input, call getch(). If it returns ERR, no input was available.
   int i = getch();
   if(i == ERR) {
